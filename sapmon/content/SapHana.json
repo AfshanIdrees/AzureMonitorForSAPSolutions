@@ -146,6 +146,21 @@
             ]
         },
         {
+            "name": "HANA_Backups_SizeEstimation_1.00.120+",
+            "description": "Data backup size estimation",
+            "customLog": "SapHana_Backup_SizeEstimation",
+            "frequencySecs": 21600,
+            "includeInCustomerAnalytics": true,
+            "actions": [
+                {
+                    "type": "ExecuteSql",
+                    "parameters": {
+                        "sql": "SELECT B.HOST, LPAD(B.PORT, 5) PORT, B.SERVICE_NAME, B.ENTRY_TYPE_NAME BACKUP_TYPE, LPAD(TO_DECIMAL(B.ESTIMATED_SIZE / 1024 / 1024 / 1024, 10, 2), 10) SIZE_GB FROM ( SELECT '%' HOST, '%' PORT, '%' SERVICE_NAME, '%' BACKUP_TYPE FROM DUMMY ) BI, M_BACKUP_SIZE_ESTIMATIONS B WHERE B.HOST LIKE BI.HOST AND TO_VARCHAR(B.PORT) LIKE BI.PORT AND B.SERVICE_NAME LIKE BI.SERVICE_NAME AND B.ENTRY_TYPE_NAME LIKE BI.BACKUP_TYPE ORDER BY B.HOST, B.PORT, B.ENTRY_TYPE_NAME"
+                    }
+                }
+            ]
+        },
+        {
             "name": "HANADatasize",
             "description": "SAP HANA size",
             "customLog": "SapHana_size01",
@@ -162,3 +177,4 @@
         }
     ]
 }
+ 
